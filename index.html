@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Before After</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body id="body">
+
+<section class="section">
+	
+	<div class="text">
+		<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
+			Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.
+		</p>
+	</div>
+	<div id="target" class="container">
+		<img id="image00" class="images" src="images/default-thumb.opt.jpg" alt="QC3 logo">
+		<img id="image01" class="images" src="images/img02.jpg" alt="green panel">
+	</div>
+	<div class="">
+		<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
+		</p>
+	</div>
+	<!-- <div class="text">
+		<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
+			Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.
+		</p>
+	</div> -->
+	<!-- <div class="text">
+		<p>
+			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
+			Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.
+		</p>
+	</div> -->
+</section>
+
+<script>
+	var target = document.getElementById('target');
+	var image01 = document.getElementById('image01');
+	var body = document.getElementById('body');
+	var targetInfo;
+	var topValue;
+	var visible = false;
+	var firstValue = window.scrollY;
+
+	$(window).on("load resize scroll",  dosomething);
+
+	function dosomething(e) {
+		targetInfo = target.getBoundingClientRect();
+		// console.log(targetInfo);
+		var height = targetInfo.height;
+		topValue = targetInfo.top;
+
+		
+		
+		// if (topValue <= 0 && visible === false) {
+		if (topValue <= 0) {
+			e.preventDefault();
+			// body.className = 'no-scroll';
+			// visible = true;
+			console.log('In ' + height);
+			setScrollDefault(firstValue);
+			setHeight();
+		}
+		// else if ((topValue + height) <= 0 && visible === true) {
+		else if ((topValue + height) <= 0) {
+			console.log('out');
+			// visible = false;
+		}
+	}
+
+
+	function setHeight() {
+		console.log('setHight');
+		var h = image01.getBoundingClientRect()
+		h = h.height;
+		// h = h - getScrollY();
+		console.log('??Y ' + getScrollY());
+		console.log('height ' + h);
+		// h = h / (h / 100);
+		h = 100 - getScrollY(firstValue);
+		console.log('percentage ' + h);
+		image01.style.top = h + '%';
+	}
+
+	function getScrollY(firstValue) {
+		// var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
+		// var scrollTop = document.getElementById('target').scrollTop;
+		console.log('first value in getScrollY ' + firstValue2);
+		var y = window.scrollY - firstValue2;
+		console.log('Y ' + y);
+		return y;
+	}
+
+	function setScrollDefault(firstValue) {
+		// firstValue = window.scrollY;
+		firstValue2 = firstValue;
+	}
+
+	// function getNode() {
+	// 	var nodeList = document.querySelectorAll('images');
+	// 	var nodeArray = [];
+	// 	for (var i = 0; i < nodeList.length; ++i) {
+	// 		nodeArray[i] = nodeList[i];
+	// 	}
+	// 	console.log(nodeArray);
+	// 	return nodeArray;
+	// }
+</script>
+</body>
+</html>

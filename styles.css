@@ -1,0 +1,29 @@
+.section {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 960px;
+}
+.text p {
+    font-size: 6rem;
+}
+.container {
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 52.25%;
+    position: relative;
+    text-align: center;
+}
+.images {
+    left: 50%;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+.images:nth-child(2) {
+    top: 100%;
+}
+
+body.no-scroll { /* ...or body.dialogShowing */
+  overflow: hidden;
+}
