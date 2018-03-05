@@ -16,25 +16,27 @@
 			Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.
 		</p>
 	</div>
-	<div id="target" class="container">
-		<img id="image00" class="images" src="images/default-thumb.opt.jpg" alt="QC3 logo">
-		<img id="image01" class="images" src="images/img02.jpg" alt="green panel">
+	<div id="container" class="container">
+		<div id="wrap" class="wrapper">
+			<div id="wrapper__" class="wrapper__" style="position: relative;">
+				<!-- <img id="image00" class="images" src="images/default-thumb.opt.jpg" alt="QC3 logo"> -->
+				<!-- <div id="img01cont" style="background: red; height: 0px; bottom: 0; position: static;"> -->
+				<div id="img01">
+					<span id="img01__">
+						<img id="image01" class="images" src="images/image01.jpg" alt="green">
+					</span>
+				</div>
+				<!-- </div> -->
+				
+			</div>
+		</div>
 	</div>
-	<div class="">
-		<p>
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-		</p>
-	</div>
-	<!-- <div class="text">
+	<div class="text">
 		<p>
 			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
 			Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.
 		</p>
-	</div> -->
+	</div>
 	<!-- <div class="text">
 		<p>
 			Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
@@ -44,10 +46,12 @@
 </section>
 
 <script>
-	var target = document.getElementById('target');
+	var container = document.getElementById('container');
 	var image01 = document.getElementById('image01');
 	var body = document.getElementById('body');
-	var targetInfo;
+	var wrap = document.getElementById('wrap');
+	var wrapper__ = document.getElementById('wrapper__');
+	var containerInfo;
 	var topValue;
 	var visible = false;
 	var firstValue = window.scrollY;
@@ -55,29 +59,29 @@
 	$(window).on("load resize scroll",  dosomething);
 
 	function dosomething(e) {
-		targetInfo = target.getBoundingClientRect();
-		// console.log(targetInfo);
-		var height = targetInfo.height;
-		topValue = targetInfo.top;
+		containerInfo = container.getBoundingClientRect();
+		var height = containerInfo.height;
+		topValue = containerInfo.top;
 
 		
-		
-		// if (topValue <= 0 && visible === false) {
-		if (topValue <= 0) {
-			e.preventDefault();
-			// body.className = 'no-scroll';
-			// visible = true;
-			console.log('In ' + height);
+		if (topValue <= 0 && topValue >= -30) {
+			// if (visible == false) {
+				container.classList = 'container fixed';
+				wrapper__.style.overflow = 'scroll';
+			// }
+			visible = true;
 			setScrollDefault(firstValue);
 			setHeight();
+			console.log('topValue: ' + topValue);
+			console.log('height: ' + height);
 		}
-		// else if ((topValue + height) <= 0 && visible === true) {
-		else if ((topValue + height) <= 0) {
+		else {
 			console.log('out');
+			container.classList = 'container';
+			wrapper__.style.overflow = 'hidden';
 			// visible = false;
 		}
 	}
-
 
 	function setHeight() {
 		console.log('setHight');
@@ -87,14 +91,16 @@
 		console.log('??Y ' + getScrollY());
 		console.log('height ' + h);
 		// h = h / (h / 100);
-		h = 100 - getScrollY(firstValue);
+		h = 100/getScrollY(firstValue);
 		console.log('percentage ' + h);
 		image01.style.top = h + '%';
+		// image01.style.height = h + '%';
+		console.log('HE ' + image01.style.top);
 	}
 
 	function getScrollY(firstValue) {
 		// var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
-		// var scrollTop = document.getElementById('target').scrollTop;
+		// var scrollTop = document.getElementById('container').scrollTop;
 		console.log('first value in getScrollY ' + firstValue2);
 		var y = window.scrollY - firstValue2;
 		console.log('Y ' + y);
@@ -105,6 +111,14 @@
 		// firstValue = window.scrollY;
 		firstValue2 = firstValue;
 	}
+
+
+	// image01.addEventListener('click', function() {
+	// 	console.log('out');
+	// 	container.classList = 'container';
+	// 	wrapper__.style.overflow = 'hidden';
+	// 	visible = false;
+	// });
 
 	// function getNode() {
 	// 	var nodeList = document.querySelectorAll('images');
