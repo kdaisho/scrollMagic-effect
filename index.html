@@ -34,7 +34,6 @@ html, body {
 }
 .container {
 	margin: 0 auto 100px;
-	/*position: initial;*/
 	position: relative;
 	left: 0;
 	top: 0;
@@ -127,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		setHeight();
 
 		rect = container.getBoundingClientRect();
-
+		console.count('load resize');
 		evalIfpassed();
 		console.log('is passed on load? ' + isPassed);
 
@@ -146,17 +145,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function evalIfpassed() {
+		console.count('evalIfpassed()');
 		isPassed = rect.y < 0 ? true : false;
+		console.log('is passed ' + isPassed);
 	}
 
 	function init() {
 
 		function doSomething(scrollPos, scrollDir) {
-			rect = container.getBoundingClientRect();
-			if (isPassed) {
-				evalIfpassed();
-			}
-
+			
+			console.log('ISPASSED ' + isPassed);
 			if (!isPassed && rect.y <= 0) {
 				console.log('start animation');
 
@@ -215,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			scrollDir = lastKnownPos > currYPos ? 'up' : 'down';
 			console.log('SCrollDir: ' + scrollDir + ', LAstKnownPos: ' + lastKnownPos);
 			lastKnownPos = currYPos;
+			rect = container.getBoundingClientRect();
 
 			if (!ticking) {
 				window.requestAnimationFrame(function() {
