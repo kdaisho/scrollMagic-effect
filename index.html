@@ -122,12 +122,20 @@ document.addEventListener('DOMContentLoaded', function() {
 	var set = false,
 		is01done = false;
 
+	var lastY,
+		isCrossed = false;
+
 	$(window).on("load resize", function() {
 		setHeight();
 
-		rect = container.getBoundingClientRect();
+		var __rect = container.getBoundingClientRect();
+		lastY = __rect.y;
+
+		console.log('!LastY: ' + lastY);
+		console.log('!rect.y: ' + __rect.y);
+
 		console.count('load resize');
-		evalIfpassed();
+		evalIfpassed(__rect.y);
 		console.log('is passed on load? ' + isPassed);
 
 		init();
@@ -144,23 +152,44 @@ document.addEventListener('DOMContentLoaded', function() {
 		container.style.height = innerH + 'px';
 	}
 
-	function evalIfpassed() {
+	function evalIfpassed(value) {
 		console.count('evalIfpassed()');
-		isPassed = rect.y < 0 ? true : false;
+		isPassed = value < 0 ? true : false;
 		console.log('is passed ' + isPassed);
 	}
 
-	function init() {
+	function detectIfcrossed() {
+		console.count('!detectIfcrossed::');
 
+		console.log('!2LastY: ' + lastY);
+		console.log('!2rect.y: ' + rect.y);
+		
+		
+		if (lastY > 0 && rect.y < 0) {
+			isCrossed = 'crossed H to L';
+		}
+		else if (lastY < 0 && rect.y > 0) {
+			isCrossed = 'crossed L to H';
+		}
+		console.log('? ' + isCrossed);
+	}
+console.log('? ' + isCrossed);
+	function init() {
+console.log('? ' + isCrossed);
 		function doSomething(scrollPos, scrollDir) {
 			
-			console.log('ISPASSED ' + isPassed);
-			if (!isPassed && rect.y <= 0) {
+			// console.log('ISPASSED ' + isPassed);
+			console.log('!!IScrossed ' + isCrossed);
+
+			if (rect.y <= 0) {
+				if (isPassed) {
+
+				}
 				console.log('start animation');
 
 				if (is01done == false) {
-					overlay.style.display = 'block';
-					container.style.position = 'fixed';
+					// overlay.style.display = 'block';
+					// container.style.position = 'fixed';
 				}
 				if (isAnimate == false) {
 					startingY = window.scrollY;
@@ -214,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			console.log('SCrollDir: ' + scrollDir + ', LAstKnownPos: ' + lastKnownPos);
 			lastKnownPos = currYPos;
 			rect = container.getBoundingClientRect();
+
+			detectIfcrossed();
 
 			if (!ticking) {
 				window.requestAnimationFrame(function() {
