@@ -157,11 +157,15 @@ document.addEventListener('DOMContentLoaded', function() {
 			isCrossed = true;
 			var __la = rect.y;
 			console.log('__la ' + __la);
+
+
 		}
-		if (__la < -40 || __la > 40) {
+		if (__la < -20 || __la > 20) {
 
 			console.log('__SET FALSE ' + __la);
 			isCrossed = false;
+
+			isPassed = false;
 		}
 	}
 
@@ -171,23 +175,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 			if(isCrossed) {
 				console.log('crossing');
-				// isPassed = false;
-			}
-
-			if(is01done && isCrossed) {
 			}
 			
 			console.log('!!IScrossed ' + isCrossed);
 
 			// if (!isPassed && rect.y <= 0) {
-			if (isCrossed) {
+			if (!isPassed && isCrossed) {
 
 				console.log('dCROSSED');
 
-				if (is01done == false) {
-					overlay.style.display = 'block';
-					container.style.position = 'fixed';
-				}
+				// if (is01done == false) {
+					// overlay.style.display = 'block';
+					// container.style.position = 'fixed';
+				// }
 				if (isAnimate == false) {
 					startingY = window.scrollY;
 					isAnimate = true;
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					newCSSprop = 100 - scAmount;
 					endingY = scAmount;
 				}
-				else {
+				if (scrollDir == 'up') {
 					scAmount = scAmount - endingY;
 					newCSSprop = newCSSprop + scAmount;    
 				}
@@ -222,14 +222,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 					container.style.position = 'relative';
 					
-					is01done = true;
+					// is01done = true;
 
-					if (is01done && isAnimate && kickin) {
-						img01Cont.style.height = '0%';
-						
-					}
-
-					isAnimate = false;
+					// isAnimate = false;
 				}
 			}
 		}
