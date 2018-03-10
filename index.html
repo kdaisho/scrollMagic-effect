@@ -151,14 +151,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	function evalIfpassed(value) {
 		isPassed = value < 0 ? true : false;
 	}
-var __la = 'ci';
+
 	function detectIfcrossedOnce() {		
 		if ((lastY > 0 && rect.y < 0) || (lastY < 0 && rect.y > 0)) {
 			isCrossed = true;
-			__la = rect.y;
+			var __la = rect.y;
 			console.log('__la ' + __la);
 		}
-		if (__la < -50 || __la > 50) {
+		if (__la < -40 || __la > 40) {
 
 			console.log('__SET FALSE ' + __la);
 			isCrossed = false;
@@ -171,20 +171,22 @@ var __la = 'ci';
 
 			if(isCrossed) {
 				console.log('crossing');
+				// isPassed = false;
+			}
+
+			if(is01done && isCrossed) {
 			}
 			
-			// console.log('ISPASSED ' + isPassed);
 			console.log('!!IScrossed ' + isCrossed);
 
-			if (rect.y <= 0) {
-				if (isPassed) {
+			// if (!isPassed && rect.y <= 0) {
+			if (isCrossed) {
 
-				}
-				console.log('start animation');
+				console.log('dCROSSED');
 
 				if (is01done == false) {
-					// overlay.style.display = 'block';
-					// container.style.position = 'fixed';
+					overlay.style.display = 'block';
+					container.style.position = 'fixed';
 				}
 				if (isAnimate == false) {
 					startingY = window.scrollY;
@@ -202,14 +204,14 @@ var __la = 'ci';
 					newCSSprop = newCSSprop + scAmount;    
 				}
 
-				if (!is01done) {
+				// if (!is01done) {
 					img01Cont.style.height = parseInt(newCSSprop) + '%';
 					console.log('!!img01Cont.style.height: ' + img01Cont.style.height);
 					console.log('!!scAmount: ' + scAmount);
 					console.log('!!innerH: ' + innerH);
 					// container.scrollIntoView();
 					//container.style.top = scAmount + 'px'; //keep container in viewport without using position fixed
-				}
+				// }
 
 
 				if (isAnimate && (scAmount >= 100 || scAmount <= -10)) {
@@ -220,7 +222,7 @@ var __la = 'ci';
 
 					container.style.position = 'relative';
 					
-					// is01done = true;
+					is01done = true;
 
 					if (is01done && isAnimate && kickin) {
 						img01Cont.style.height = '0%';
