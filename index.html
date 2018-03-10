@@ -97,134 +97,135 @@ html, body {
 </article>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+	var img01 = document.getElementById('img01'),
+		container = document.getElementById('container'),
+		img01Cont = document.getElementById('img01Cont'),
+		overlay = document.getElementById('overlay'),
+		innerH,
+		rect,
+		startingY = 0,
+		endingY = 0,
+		scAmount,
+		scrollDir,
+		CSSprop,
+		newCSSprop,
+		kickin = false,
+		isAnimate = false,
+		isPassed;
 
-var img01 = document.getElementById('img01'),
-	container = document.getElementById('container'),
-	img01Cont = document.getElementById('img01Cont'),
-	overlay = document.getElementById('overlay'),
-	innerH,
-	rect,
-	startingY = 0,
-	endingY = 0,
-	scAmount,
-	scrollDir,
-	CSSprop,
-	newCSSprop,
-	kickin = false,
-	isAnimate = false,
-	isPassed;
+	var supportOffset = window.pageYOffset !== undefined,
+		lastKnownPos = 0,
+		ticking = false,
+		scrollDir,
+		currYPos;
 
-var supportOffset = window.pageYOffset !== undefined,
-	lastKnownPos = 0,
-	ticking = false,
-	scrollDir,
-	currYPos;
+	var set = false,
+		is01done = false;
 
-var set = false,
-	is01done = false;
+	$(window).on("load resize", function() {
+		setHeight();
 
-$(window).on("load resize", function() {
-	setHeight();
-
-	rect = container.getBoundingClientRect();
-
-	evalIfpassed();
-	console.log('is passed on load? ' + isPassed);
-
-	init();
-});
-
-$(window).on('scroll', function() {
-	lastKnownPos = 0;
-});
-
-function setHeight() {
-	innerH = window.innerHeight;
-	img01.style.height = innerH + 'px';
-	img01Cont.style.height = innerH + 'px';
-	container.style.height = innerH + 'px';
-}
-
-function evalIfpassed() {
-	isPassed = rect.y < 0 ? true : false;
-}
-
-function init() {
-
-	function doSomething(scrollPos, scrollDir) {
 		rect = container.getBoundingClientRect();
-		if (isPassed) {
-			evalIfpassed();
-		}
 
-		if (!isPassed && rect.y <= 0) {
-			console.log('start animation');
+		evalIfpassed();
+		console.log('is passed on load? ' + isPassed);
 
-			if (is01done == false) {
-				overlay.style.display = 'block';
-				container.style.position = 'fixed';
-			}
-			if (isAnimate == false) {
-				startingY = window.scrollY;
-				isAnimate = true;
-			}
-			scAmount = window.scrollY - parseInt(startingY);
+		init();
+	});
 
-			if (scrollDir == 'down') {
-				kickin = true;
-				newCSSprop = 100 - scAmount;
-				endingY = scAmount;
-			}
-			else {
-				scAmount = scAmount - endingY;
-				newCSSprop = newCSSprop + scAmount;    
-			}
+	$(window).on('scroll', function() {
+		lastKnownPos = 0;
+	});
 
-			if (!is01done) {
-				img01Cont.style.height = parseInt(newCSSprop) + '%';
-				console.log('!!img01Cont.style.height: ' + img01Cont.style.height);
-				console.log('!!scAmount: ' + scAmount);
-				console.log('!!innerH: ' + innerH);
-				// container.scrollIntoView();
-				//container.style.top = scAmount + 'px'; //keep container in viewport without using position fixed
-			}
-
-
-			if (isAnimate && (scAmount >= 100 || scAmount <= -10)) {
-				console.log('end of animation');
-				// alert('end of animation');
-
-				overlay.style.display = 'none';
-
-				container.style.position = 'relative';
-				
-				// is01done = true;
-
-				if (is01done && isAnimate && kickin) {
-					img01Cont.style.height = '0%';
-					
-				}
-
-				isAnimate = false;
-			}
-		}
+	function setHeight() {
+		innerH = window.innerHeight;
+		img01.style.height = innerH + 'px';
+		img01Cont.style.height = innerH + 'px';
+		container.style.height = innerH + 'px';
 	}
 
-	window.addEventListener('wheel', function(e) {
-		currYPos = supportOffset ? window.pageYOffset : document.body.scrollTop;
-		scrollDir = lastKnownPos > currYPos ? 'up' : 'down';
-		console.log('SCrollDir: ' + scrollDir + ', LAstKnownPos: ' + lastKnownPos);
-		lastKnownPos = currYPos;
+	function evalIfpassed() {
+		isPassed = rect.y < 0 ? true : false;
+	}
 
-		if (!ticking) {
-			window.requestAnimationFrame(function() {
-				doSomething(lastKnownPos, scrollDir);
-				ticking = false;
-			});
+	function init() {
+
+		function doSomething(scrollPos, scrollDir) {
+			rect = container.getBoundingClientRect();
+			if (isPassed) {
+				evalIfpassed();
+			}
+
+			if (!isPassed && rect.y <= 0) {
+				console.log('start animation');
+
+				if (is01done == false) {
+					overlay.style.display = 'block';
+					container.style.position = 'fixed';
+				}
+				if (isAnimate == false) {
+					startingY = window.scrollY;
+					isAnimate = true;
+				}
+				scAmount = window.scrollY - parseInt(startingY);
+
+				if (scrollDir == 'down') {
+					kickin = true;
+					newCSSprop = 100 - scAmount;
+					endingY = scAmount;
+				}
+				else {
+					scAmount = scAmount - endingY;
+					newCSSprop = newCSSprop + scAmount;    
+				}
+
+				if (!is01done) {
+					img01Cont.style.height = parseInt(newCSSprop) + '%';
+					console.log('!!img01Cont.style.height: ' + img01Cont.style.height);
+					console.log('!!scAmount: ' + scAmount);
+					console.log('!!innerH: ' + innerH);
+					// container.scrollIntoView();
+					//container.style.top = scAmount + 'px'; //keep container in viewport without using position fixed
+				}
+
+
+				if (isAnimate && (scAmount >= 100 || scAmount <= -10)) {
+					console.log('end of animation');
+					// alert('end of animation');
+
+					overlay.style.display = 'none';
+
+					container.style.position = 'relative';
+					
+					// is01done = true;
+
+					if (is01done && isAnimate && kickin) {
+						img01Cont.style.height = '0%';
+						
+					}
+
+					isAnimate = false;
+				}
+			}
 		}
-		ticking = true;
-	});
-}
+
+		window.addEventListener('wheel', function(e) {
+			currYPos = supportOffset ? window.pageYOffset : document.body.scrollTop;
+			scrollDir = lastKnownPos > currYPos ? 'up' : 'down';
+			console.log('SCrollDir: ' + scrollDir + ', LAstKnownPos: ' + lastKnownPos);
+			lastKnownPos = currYPos;
+
+			if (!ticking) {
+				window.requestAnimationFrame(function() {
+					doSomething(lastKnownPos, scrollDir);
+					ticking = false;
+				});
+			}
+			ticking = true;
+		});
+	}
+});
 
 </script>
 
