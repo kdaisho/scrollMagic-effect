@@ -130,13 +130,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		var __rect = container.getBoundingClientRect();
 		lastY = __rect.y;
-
-		console.log('!LastY: ' + lastY);
-		console.log('!rect.y: ' + __rect.y);
-
-		console.count('load resize');
 		evalIfpassed(__rect.y);
-		console.log('is passed on load? ' + isPassed);
+
+		console.log('isPassed on load? ' + isPassed);
 
 		init();
 	});
@@ -153,20 +149,29 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function evalIfpassed(value) {
-		console.count('evalIfpassed()');
 		isPassed = value < 0 ? true : false;
-		console.log('is passed ' + isPassed);
 	}
-
+var __la = 'ci';
 	function detectIfcrossedOnce() {		
 		if ((lastY > 0 && rect.y < 0) || (lastY < 0 && rect.y > 0)) {
 			isCrossed = true;
+			__la = rect.y;
+			console.log('__la ' + __la);
+		}
+		if (__la < -50 || __la > 50) {
+
+			console.log('__SET FALSE ' + __la);
+			isCrossed = false;
 		}
 	}
 
 	function init() {
 
 		function doSomething(scrollPos, scrollDir) {
+
+			if(isCrossed) {
+				console.log('crossing');
+			}
 			
 			// console.log('ISPASSED ' + isPassed);
 			console.log('!!IScrossed ' + isCrossed);
