@@ -158,24 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		console.log('is passed ' + isPassed);
 	}
 
-	function detectIfcrossed() {
-		console.count('!detectIfcrossed::');
-
-		console.log('!2LastY: ' + lastY);
-		console.log('!2rect.y: ' + rect.y);
-		
-		
-		if (lastY > 0 && rect.y < 0) {
-			isCrossed = 'crossed H to L';
+	function detectIfcrossedOnce() {		
+		if ((lastY > 0 && rect.y < 0) || (lastY < 0 && rect.y > 0)) {
+			isCrossed = true;
 		}
-		else if (lastY < 0 && rect.y > 0) {
-			isCrossed = 'crossed L to H';
-		}
-		console.log('? ' + isCrossed);
 	}
-console.log('? ' + isCrossed);
+
 	function init() {
-console.log('? ' + isCrossed);
+
 		function doSomething(scrollPos, scrollDir) {
 			
 			// console.log('ISPASSED ' + isPassed);
@@ -244,7 +234,7 @@ console.log('? ' + isCrossed);
 			lastKnownPos = currYPos;
 			rect = container.getBoundingClientRect();
 
-			detectIfcrossed();
+			detectIfcrossedOnce();
 
 			if (!ticking) {
 				window.requestAnimationFrame(function() {
