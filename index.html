@@ -65,7 +65,7 @@ html, body {
 	background: #000;
 	height: 9999px;
 	left: 0;
-	opacity: 0;
+	opacity: .5;
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	$(window).on('scroll', function() {
-		lastKnownPos = 0;
+		// lastKnownPos = 0;
 	});
 
 	function setHeight() {
@@ -158,17 +158,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			var __la = rect.y;
 			console.log('__la ' + __la);
 
+			if(is01done) {
+				is01done = false;
+			}
+
 
 		}
-		if (__la < -20 || __la > 20) {
+
+		if (__la < -10 || __la > 10) {
 
 			console.log('__SET FALSE ' + __la);
 			isCrossed = false;
-
 			isPassed = false;
 		}
 	}
-
+var cc;
 	function init() {
 
 		function doSomething(scrollPos, scrollDir) {
@@ -180,29 +184,35 @@ document.addEventListener('DOMContentLoaded', function() {
 			console.log('!!IScrossed ' + isCrossed);
 
 			// if (!isPassed && rect.y <= 0) {
-			if (!isPassed && isCrossed) {
+			if (!isPassed && isCrossed && !is01done) {
 
 				console.log('dCROSSED');
 
 				// if (is01done == false) {
-					// overlay.style.display = 'block';
-					// container.style.position = 'fixed';
+					overlay.style.display = 'block';
+					container.style.position = 'fixed';
 				// }
 				if (isAnimate == false) {
 					startingY = window.scrollY;
 					isAnimate = true;
 				}
-				scAmount = window.scrollY - parseInt(startingY);
+				// scAmount = window.scrollY - parseInt(startingY);
 
-				if (scrollDir == 'down') {
+				if (scrollDir == 'down' || scrollDir == 'up') {
+					scAmount = window.scrollY - parseInt(startingY);
 					kickin = true;
+					scAmount = scAmount/10;
 					newCSSprop = 100 - scAmount;
 					endingY = scAmount;
+					console.log('SC1 ' + scAmount);
 				}
-				if (scrollDir == 'up') {
-					scAmount = scAmount - endingY;
-					newCSSprop = newCSSprop + scAmount;    
-				}
+				// if (scrollDir == 'up') {
+				// 	scAmount = window.scrollY - parseInt(startingY);
+				// 	endingY = endingY/10;
+				// 	scAmount = scAmount - endingY;
+				// 	console.log('SC2 ' + scAmount);
+				// 	newCSSprop = newCSSprop - scAmount;    
+				// }
 
 				// if (!is01done) {
 					img01Cont.style.height = parseInt(newCSSprop) + '%';
@@ -221,8 +231,10 @@ document.addEventListener('DOMContentLoaded', function() {
 					overlay.style.display = 'none';
 
 					container.style.position = 'relative';
+
+					scAmount = 0;
 					
-					// is01done = true;
+					is01done = true;
 
 					// isAnimate = false;
 				}
