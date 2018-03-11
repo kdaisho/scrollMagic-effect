@@ -189,23 +189,65 @@ var cc;
 				console.log('dCROSSED');
 
 				// if (is01done == false) {
-					overlay.style.display = 'block';
-					container.style.position = 'fixed';
+				overlay.style.display = 'block';
+				container.style.position = 'fixed';
 				// }
 				if (isAnimate == false) {
 					startingY = window.scrollY;
+					// endingY = window.scrollY;
+					
 					isAnimate = true;
 				}
 				// scAmount = window.scrollY - parseInt(startingY);
 
-				if (scrollDir == 'down' || scrollDir == 'up') {
-					scAmount = window.scrollY - parseInt(startingY);
-					kickin = true;
-					scAmount = scAmount/10;
-					newCSSprop = 100 - scAmount;
-					endingY = scAmount;
+				// if (scrollDir == 'down' || scrollDir == 'up') {
+					// if(!kickin) {
+
+						console.log('here1');
+						// scAmount = window.scrollY - parseInt(startingY);
+
+						scAmount = Math.abs(window.scrollY) - parseInt(startingY);
+						// kickin = true;
+						// scAmount = Math.abs(scAmount);
+					// }
+					// endingY = scAmount;
+					// if(kickin) {
+						console.log('here2');
+						// scAmount = window.scrollY - parseInt(endingY);
+						// scAmount = Math.abs(window.scrollY) - parseInt(endingY);
+						// scAmount = 0;
+						console.log('scA ' + scAmount);
+						// scAmount = 100;
+						
+
+						if (scrollDir == 'up') {
+							// scAmount = endingY + 50;
+						}
+						kickin = false;
+					// }
+
+					if (scrollDir == 'down') {
+						newCSSprop = 100 - scAmount;
+					}
+					if (scrollDir == 'up') {
+						// newCSSprop = endingY + 1;
+						// if (scAmount <= 101 && scAmount > 0) {
+
+							newCSSprop = Math.abs(scAmount);
+							console.log('BnewCSSprop ' + newCSSprop);
+						// }
+					}
+
+					// scAmount = scAmount/10;
+					
+					
 					console.log('SC1 ' + scAmount);
-				}
+				// }
+				// if (scrollDir == 'up') {
+				// 	console.log('SC2 ' + scAmount);
+				// 	newCSSprop = scAmount + 1;
+				// 	console.log('SC3 ' + newCSSprop);
+				// }
 				// if (scrollDir == 'up') {
 				// 	scAmount = window.scrollY - parseInt(startingY);
 				// 	endingY = endingY/10;
@@ -214,7 +256,7 @@ var cc;
 				// 	newCSSprop = newCSSprop - scAmount;    
 				// }
 
-				// if (!is01done) {
+				// if (scAmount <= 100 && scAmount >= 0) {
 					img01Cont.style.height = parseInt(newCSSprop) + '%';
 					console.log('!!img01Cont.style.height: ' + img01Cont.style.height);
 					console.log('!!scAmount: ' + scAmount);
@@ -224,17 +266,19 @@ var cc;
 				// }
 
 
-				if (isAnimate && (scAmount >= 100 || scAmount <= -10)) {
+				if (isAnimate && (scAmount >= 100 || scAmount <= -100)) {
 					console.log('end of animation');
 					// alert('end of animation');
 
 					overlay.style.display = 'none';
-
 					container.style.position = 'relative';
 
 					scAmount = 0;
 					
 					is01done = true;
+					endingY = parseInt(img01Cont.style.height);
+					console.log('ed ' + endingY);
+					kickin = true;
 
 					// isAnimate = false;
 				}
