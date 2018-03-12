@@ -225,20 +225,29 @@ var cc;
 						}
 						kickin = false;
 					// }
-
+					if (!is01done) {
+						cc = 100;
+					}
+					else {
+						cc = 0;	
+					}
+					// cc = 100;
+					
 					if (scrollDir == 'down') {
-						newCSSprop = 100 - scAmount;
+						// newCSSprop = 100 - scAmount;
+
 					}
 					if (scrollDir == 'up') {
+
 						// newCSSprop = endingY + 1;
 						// if (scAmount <= 101 && scAmount > 0) {
 
-							newCSSprop = Math.abs(scAmount);
+							// newCSSprop = Math.abs(scAmount);
 							console.log('BnewCSSprop ' + newCSSprop);
 						// }
 					}
 
-					// scAmount = scAmount/10;
+					newCSSprop = cc - Math.abs(scAmount);;
 					
 					
 					console.log('SC1 ' + scAmount);
@@ -266,7 +275,7 @@ var cc;
 				// }
 
 
-				if (isAnimate && (scAmount >= 100 || scAmount <= -100)) {
+				if (isAnimate && (scAmount >= 100 || scAmount <= -10)) {
 					console.log('end of animation');
 					// alert('end of animation');
 
