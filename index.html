@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        window.addEventListener('wheel', function(e) {
+        window.addEventListener('wheel', function() {
             currYPos = supportOffset ? window.pageYOffset : document.body.scrollTop;
             rect = container.getBoundingClientRect();
             scrollDir = lastKnownPos > currYPos ? 'up' : 'down';
@@ -268,7 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             ticking = true;
-        });
+        }, {
+			capture: true,
+			passive: true
+		});
     }
 });
 
